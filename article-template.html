@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CLAUDE: Replace with article title -->
+  <title>ARTICLE_TITLE — Forward/Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300;1,400;1,600&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── DO NOT MODIFY THIS STYLE BLOCK ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #F7F6F2;
+      --white:      #FEFCF9;
+      --dark:       #0D0C0A;
+      --surface:    #EFECEA;
+      --border:     #E0DCD5;
+      --text:       #141311;
+      --muted:      #8A867F;
+      --light:      #B4B0A8;
+      --accent:     #E8521A;
+      --accent-bg:  rgba(232, 82, 26, 0.08);
+      --blue:       #1B5FCC;
+      --green:      #1A8F5C;
+      --font-sans:  'Bricolage Grotesque', system-ui, sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'DM Mono', monospace;
+      --col:        660px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); font-size: 16px;
+      line-height: 1.78; font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: var(--accent); color: #fff; }
+
+    #bar {
+      position: fixed; top: 0; left: 0; height: 2px;
+      width: 0%; background: var(--accent);
+      z-index: 300; transition: width 0.07s linear;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 52px; display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(18px, 4vw, 44px);
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    nav.on {
+      background: rgba(247, 246, 242, 0.93);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: var(--border);
+    }
+    .nav-brand {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-brand b { color: var(--accent); font-weight: 400; }
+    .nav-brand:hover { color: var(--text); }
+    .nav-r { display: flex; align-items: center; gap: 20px; list-style: none; }
+    .nav-r a {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-r a:hover { color: var(--text); }
+    .nav-r .cta a {
+      color: var(--accent); border: 1px solid rgba(232,82,26,0.3);
+      padding: 4px 12px; border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-r .cta a:hover { background: var(--accent); color: #fff; }
+    @media (max-width: 600px) { .nav-r .sm-hide { display: none; } }
+
+    .page {
+      max-width: calc(var(--col) + 80px);
+      margin: 0 auto; padding: 0 clamp(18px, 5vw, 40px);
+    }
+
+    .title-block {
+      padding-top: clamp(88px, 14vw, 128px);
+      padding-bottom: clamp(28px, 5vw, 48px); text-align: center;
+    }
+    .eyebrow { display: inline-flex; align-items: center; gap: 12px; margin-bottom: clamp(18px, 3vw, 28px); }
+    .tag {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-bg);
+      border: 1px solid rgba(232,82,26,0.22);
+      padding: 3px 9px; border-radius: 2px;
+    }
+    .eyebrow-date {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--light);
+    }
+    h1 {
+      font-family: var(--font-sans);
+      font-size: clamp(46px, 9vw, 100px);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.04em; text-transform: uppercase;
+      color: var(--text); margin-bottom: clamp(14px, 2vw, 22px);
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .sub {
+      font-family: var(--font-serif); font-style: italic; font-weight: 300;
+      font-size: clamp(17px, 2vw, 22px); color: var(--muted); line-height: 1.5;
+      max-width: 480px; margin: 0 auto clamp(20px, 3vw, 30px);
+    }
+    .byline { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .by { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--light); }
+    .by strong { color: var(--muted); font-weight: 500; }
+    .by-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+
+    .hero-visual {
+      margin: clamp(24px, 4vw, 44px) 0; border-radius: 4px; overflow: hidden;
+      height: clamp(220px, 32vw, 420px); background: var(--dark); position: relative;
+    }
+    .hero-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 26px 26px; z-index: 0;
+    }
+    .hv-inner {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    .hv-year {
+      font-family: var(--font-sans); font-size: clamp(90px, 20vw, 260px);
+      font-weight: 800; letter-spacing: -0.06em; line-height: 0.9;
+      color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.10);
+      user-select: none;
+    }
+    .hv-tag {
+      font-family: var(--font-mono); font-size: clamp(8px, 1.1vw, 11px);
+      letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);
+    }
+    .hv-bars {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      display: flex; align-items: flex-end; gap: 2px;
+      height: 70px; padding: 0 10px; z-index: 3;
+    }
+    .hv-bar { flex: 1; background: rgba(255,255,255,0.05); border-radius: 2px 2px 0 0; }
+    .hv-bar:nth-child(3n+1) { background: rgba(232,82,26,0.35); }
+    .hero-visual::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--accent); z-index: 4;
+    }
+
+    .rule { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    .article {
+      max-width: var(--col); margin: 0 auto;
+      padding: clamp(36px, 6vw, 60px) 0 clamp(52px, 9vw, 88px);
+    }
+    .article p { margin-bottom: 1.55em; }
+    .article strong { font-weight: 600; }
+    .article a {
+      color: var(--text); text-decoration: underline; text-underline-offset: 3px;
+      text-decoration-color: var(--border); transition: text-decoration-color 0.2s;
+    }
+    .article a:hover { text-decoration-color: var(--accent); }
+
+    .lead { font-size: clamp(17px, 2vw, 20px); line-height: 1.72; font-weight: 400; margin-bottom: 1.8em; }
+    .lead::first-letter {
+      font-family: var(--font-sans); font-size: 4.8em; font-weight: 800;
+      line-height: 0.78; float: left; margin: 0.05em 0.12em 0 0; color: var(--accent);
+    }
+
+    .sec { margin-top: clamp(44px, 8vw, 76px); margin-bottom: 1.1em; padding-top: clamp(28px, 5vw, 48px); border-top: 1px solid var(--border); }
+    .sec-lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--light); display: block; margin-bottom: 8px; }
+    .sec h2 { font-family: var(--font-sans); font-size: clamp(24px, 4vw, 38px); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; color: var(--text); }
+
+    .pull { margin: clamp(32px, 6vw, 52px) clamp(-18px, -3vw, -48px); padding: clamp(20px, 3vw, 32px) clamp(20px, 3.5vw, 40px); border-top: 2px solid var(--text); border-bottom: 2px solid var(--text); }
+    @media (max-width: 780px) { .pull { margin-left: 0; margin-right: 0; } }
+    .pull p { font-family: var(--font-serif); font-size: clamp(20px, 2.8vw, 30px); font-style: italic; font-weight: 400; line-height: 1.42; color: var(--text); margin: 0 !important; }
+    .pull cite { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 13px; font-style: normal; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; margin: clamp(22px, 4vw, 40px) 0; }
+    @media (max-width: 500px) { .stat-grid { grid-template-columns: 1fr; } }
+    .sg { background: var(--white); padding: clamp(16px, 2.5vw, 24px); }
+    .sg-v { font-family: var(--font-sans); font-size: clamp(34px, 5vw, 52px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-bottom: 4px; }
+    .sg:nth-child(1) .sg-v { color: var(--accent); }
+    .sg:nth-child(2) .sg-v { color: var(--blue); }
+    .sg:nth-child(3) .sg-v { color: var(--green); }
+    .sg-d { font-family: var(--font-mono); font-size: 10px; color: var(--muted); line-height: 1.4; }
+
+    .sc { margin: clamp(24px, 4vw, 44px) 0; padding: clamp(20px, 3.5vw, 30px); border: 1px solid var(--border); border-radius: 3px; background: var(--white); display: flex; gap: clamp(16px, 3vw, 26px); align-items: flex-start; }
+    @media (max-width: 480px) { .sc { flex-direction: column; gap: 10px; } }
+    .sc-n { font-family: var(--font-sans); font-size: clamp(52px, 9vw, 84px); font-weight: 800; letter-spacing: -0.05em; color: var(--accent); line-height: 0.88; flex-shrink: 0; }
+    .sc-body { padding-top: 2px; }
+    .sc-lbl { font-size: 14px; color: var(--text); line-height: 1.55; margin-bottom: 8px; }
+    .sc-src { font-family: var(--font-mono); font-size: 9px; color: var(--light); letter-spacing: 0.06em; }
+
+    .analysts { margin: clamp(18px, 3vw, 32px) 0; }
+    .analyst { padding: clamp(14px, 2vw, 20px) 0; border-bottom: 1px solid var(--border); }
+    .analyst:first-child { border-top: 1px solid var(--border); }
+    .a-firm { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
+    .a-quote { font-family: var(--font-serif); font-size: clamp(14px, 1.8vw, 17px); font-style: italic; color: var(--text); line-height: 1.55; }
+
+    .uc-list { margin: clamp(18px, 3vw, 32px) 0; }
+    .uc { padding: clamp(12px, 2vw, 18px) 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 26px 1fr; gap: 14px; }
+    .uc:first-child { border-top: 1px solid var(--border); }
+    .uc-n { font-family: var(--font-mono); font-size: 9px; color: var(--accent); padding-top: 3px; }
+    .uc-t { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .uc-d { font-size: 13px; color: var(--muted); line-height: 1.58; margin: 0 !important; }
+
+    sup.r { font-family: var(--font-mono); font-size: 9px; color: var(--accent); }
+    sup.r a { color: inherit; text-decoration: none; }
+    sup.r a:hover { opacity: 0.65; }
+
+    .sources { margin-top: clamp(44px, 8vw, 72px); padding-top: clamp(24px, 4vw, 40px); border-top: 1px solid var(--border); }
+    .sources-lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--light); display: block; margin-bottom: 20px; }
+    .sources ol { list-style: none; counter-reset: s; }
+    .sources ol li { counter-increment: s; display: flex; gap: 13px; margin-bottom: 10px; font-size: 12px; line-height: 1.6; color: var(--muted); }
+    .sources ol li::before { content: counter(s); font-family: var(--font-mono); font-size: 9px; color: var(--accent); padding-top: 3px; min-width: 12px; flex-shrink: 0; }
+    .sources ol li em { font-style: italic; }
+    .sources ol li a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--border); transition: color 0.2s, text-decoration-color 0.2s; }
+    .sources ol li a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    footer { background: var(--dark); color: #7A7670; padding: clamp(22px, 4vw, 36px) clamp(18px, 5vw, 44px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: clamp(36px, 6vw, 60px); }
+    .f-brand { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; }
+    .f-brand b { color: var(--accent); font-weight: 400; }
+    .f-note { font-size: 11px; line-height: 1.5; text-align: right; }
+
+    .rv { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .rv.in { opacity: 1; transform: translateY(0); }
+    @keyframes up { to { opacity: 1; transform: translateY(0); } }
+    .u { opacity: 0; transform: translateY(10px); animation: up 0.55s ease forwards; }
+  </style>
+</head>
+<body>
+
+<div id="bar"></div>
+
+<nav id="nav">
+  <a href="../index.html" class="nav-brand">Forward<b>/</b>Research</a>
+  <ul class="nav-r">
+    <li class="sm-hide"><a href="#use-cases">Use Cases</a></li>
+    <li class="sm-hide"><a href="#sources">Sources</a></li>
+    <li class="cta"><a href="#">Download</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <!-- ═══════════════════════════════════════════════
+       CLAUDE: Replace everything between these markers
+       ═══════════════════════════════════════════════ -->
+
+  <div class="title-block">
+    <div class="eyebrow u" style="animation-delay:.2s">
+      <!-- CLAUDE: Update tag label and date -->
+      <span class="tag">Business Research</span>
+      <span class="eyebrow-date">MONTH DD, YYYY</span>
+    </div>
+
+    <!-- CLAUDE: Replace with article title. Use <em> on one word for italic accent. Max 4 words. -->
+    <h1 class="u" style="animation-delay:.32s">
+      Article<br><em>Title</em><br>Here
+    </h1>
+
+    <!-- CLAUDE: Replace with article subtitle (one sentence, editorial tone) -->
+    <p class="sub u" style="animation-delay:.44s">
+      Article subtitle goes here — one compelling sentence about the main argument.
+    </p>
+
+    <!-- CLAUDE: Update read time and sources count -->
+    <div class="byline u" style="animation-delay:.56s">
+      <span class="by"><strong>Forward Research</strong> — Business Intelligence Unit</span>
+      <span class="by-dot"></span>
+      <span class="by"><strong>12 min</strong> read</span>
+      <span class="by-dot"></span>
+      <span class="by"><strong>6</strong> sources</span>
+    </div>
+  </div>
+
+  <!-- CLAUDE: Update the hv-year span with the current year -->
+  <div class="hero-visual u" style="animation-delay:.66s">
+    <div class="hv-inner">
+      <span class="hv-year">2026</span>
+      <span class="hv-tag">Business &amp; Strategy Research Report</span>
+    </div>
+    <div class="hv-bars">
+      <div class="hv-bar" style="height:38px"></div>
+      <div class="hv-bar" style="height:24px"></div>
+      <div class="hv-bar" style="height:52px"></div>
+      <div class="hv-bar" style="height:18px"></div>
+      <div class="hv-bar" style="height:44px"></div>
+      <div class="hv-bar" style="height:30px"></div>
+      <div class="hv-bar" style="height:60px"></div>
+      <div class="hv-bar" style="height:22px"></div>
+      <div class="hv-bar" style="height:48px"></div>
+      <div class="hv-bar" style="height:36px"></div>
+      <div class="hv-bar" style="height:28px"></div>
+      <div class="hv-bar" style="height:56px"></div>
+      <div class="hv-bar" style="height:20px"></div>
+      <div class="hv-bar" style="height:42px"></div>
+      <div class="hv-bar" style="height:34px"></div>
+      <div class="hv-bar" style="height:62px"></div>
+      <div class="hv-bar" style="height:26px"></div>
+      <div class="hv-bar" style="height:46px"></div>
+      <div class="hv-bar" style="height:32px"></div>
+      <div class="hv-bar" style="height:50px"></div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <article class="article">
+
+    <!-- CLAUDE: Write the lead paragraph here. Use a striking opening sentence. -->
+    <p class="lead">
+      Lead paragraph goes here. This should open with a striking, specific observation — a statistic, a scene, or a paradox. It sets the tone for the entire article.
+    </p>
+
+    <!-- CLAUDE: Write 2–3 introductory paragraphs here -->
+    <p class="rv">
+      Second introductory paragraph. Establish the three main forces or themes you will explore in the article.
+    </p>
+
+    <!-- CLAUDE: SECTION 01 — First major theme -->
+    <div class="sec rv">
+      <span class="sec-lbl">01 — Section Label</span>
+      <h2>Section Title</h2>
+    </div>
+
+    <p class="rv">Section body paragraph.</p>
+
+    <!-- CLAUDE: Use stat-grid when you have 3 comparable statistics -->
+    <div class="stat-grid rv">
+      <div class="sg">
+        <div class="sg-v" data-count="00" data-suffix="%">00%</div>
+        <div class="sg-d">Description of what this stat means</div>
+      </div>
+      <div class="sg">
+        <div class="sg-v" data-count="00" data-suffix="%">00%</div>
+        <div class="sg-d">Description of what this stat means</div>
+      </div>
+      <div class="sg">
+        <div class="sg-v" data-count="0.0" data-suffix="×">0.0×</div>
+        <div class="sg-d">Description of what this stat means</div>
+      </div>
+    </div>
+
+    <p class="rv">Follow-up paragraph after the stat grid.</p>
+
+    <!-- CLAUDE: Use pull quotes to highlight the single most striking insight of a section -->
+    <div class="pull rv">
+      <p>"Pull quote goes here — one or two sentences capturing the most striking insight of this section."</p>
+      <cite>— Source Name, Publication, Year <sup class="r"><a href="#fn1">1</a></sup></cite>
+    </div>
+
+    <!-- CLAUDE: SECTION 02 -->
+    <div class="sec rv">
+      <span class="sec-lbl">02 — Section Label</span>
+      <h2>Section Title</h2>
+    </div>
+
+    <p class="rv">Section body paragraph.</p>
+
+    <!-- CLAUDE: Use sc (stat callout) for a single large striking statistic -->
+    <div class="sc rv">
+      <div class="sc-n" data-count="00" data-suffix="%">00%</div>
+      <div class="sc-body">
+        <div class="sc-lbl">Explanation of what this statistic means in context. Keep to 2–3 sentences maximum.</div>
+        <div class="sc-src">Source Name, Year <sup class="r"><a href="#fn1">1</a></sup></div>
+      </div>
+    </div>
+
+    <p class="rv">Follow-up paragraph.</p>
+
+    <!-- CLAUDE: SECTION 03 -->
+    <div class="sec rv">
+      <span class="sec-lbl">03 — Section Label</span>
+      <h2>Section Title</h2>
+    </div>
+
+    <p class="rv">Section body paragraph.</p>
+    <p class="rv">Additional paragraph.</p>
+
+    <!-- CLAUDE: SECTION 04 — Industry/Analyst Perspectives -->
+    <div class="sec rv">
+      <span class="sec-lbl">04 — Industry Perspectives</span>
+      <h2>What the Analysts Are Seeing</h2>
+    </div>
+
+    <p class="rv">Introductory paragraph for analyst section.</p>
+
+    <!-- CLAUDE: Add one .analyst block per firm/source. Min 3, max 5. -->
+    <div class="analysts rv">
+      <div class="analyst">
+        <div class="a-firm">Firm Name <sup class="r"><a href="#fn1">1</a></sup></div>
+        <div class="a-quote">"Direct quote or close paraphrase from the research, written in italics. Keep to 2–3 sentences."</div>
+      </div>
+      <div class="analyst">
+        <div class="a-firm">Firm Name <sup class="r"><a href="#fn2">2</a></sup></div>
+        <div class="a-quote">"Another quote or insight from a different source."</div>
+      </div>
+      <div class="analyst">
+        <div class="a-firm">Firm Name <sup class="r"><a href="#fn3">3</a></sup></div>
+        <div class="a-quote">"A third perspective or contrasting viewpoint."</div>
+      </div>
+    </div>
+
+    <p class="rv">Synthesis paragraph: what do these perspectives have in common?</p>
+
+    <!-- CLAUDE: SECTION 05 — Opportunities / Use Cases (optional, include if research covers this) -->
+    <div class="sec rv" id="use-cases">
+      <span class="sec-lbl">05 — Opportunities</span>
+      <h2>Section Title</h2>
+    </div>
+
+    <p class="rv">Introductory paragraph.</p>
+
+    <!-- CLAUDE: Add one .uc per use case. Number them 01, 02, 03... -->
+    <div class="uc-list rv">
+      <div class="uc">
+        <div class="uc-n">01</div>
+        <div>
+          <div class="uc-t">Use Case Title</div>
+          <p class="uc-d">2–3 sentence description of the use case, its target market, and expected impact.</p>
+        </div>
+      </div>
+      <div class="uc">
+        <div class="uc-n">02</div>
+        <div>
+          <div class="uc-t">Use Case Title</div>
+          <p class="uc-d">Description.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLAUDE: SECTION 06 — Conclusion -->
+    <div class="sec rv">
+      <span class="sec-lbl">06 — Conclusion</span>
+      <h2>Conclusion Title</h2>
+    </div>
+
+    <p class="rv">First conclusion paragraph — state the evidence and what it means.</p>
+    <p class="rv">Second conclusion paragraph — what organisations / readers should do.</p>
+
+    <!-- CLAUDE: Second pull quote — the article's final, most memorable line -->
+    <div class="pull rv">
+      <p>"Closing pull quote — the single most important takeaway from the entire article."</p>
+      <cite>— Forward Research Analysis, Month YYYY</cite>
+    </div>
+
+    <p class="rv">Final closing paragraph.</p>
+
+    <!-- ═══════════════════════════════════════════
+         END OF CLAUDE-EDITABLE CONTENT
+         ═══════════════════════════════════════════ -->
+
+    <!-- CLAUDE: List all sources cited in the article. Use id="fn1", id="fn2" etc. -->
+    <div class="sources rv" id="sources">
+      <span class="sources-lbl">Sources &amp; References</span>
+      <ol>
+        <li id="fn1">Author/Organisation. <em>Publication Title.</em> Publisher, Year. <a href="#" target="_blank" rel="noopener">domain.com</a></li>
+        <li id="fn2">Author/Organisation. <em>Publication Title.</em> Publisher, Year. <a href="#" target="_blank" rel="noopener">domain.com</a></li>
+        <li id="fn3">Author/Organisation. <em>Publication Title.</em> Publisher, Year. <a href="#" target="_blank" rel="noopener">domain.com</a></li>
+      </ol>
+    </div>
+
+  </article>
+
+</div>
+
+<footer>
+  <span class="f-brand">Forward<b>/</b>Research</span>
+  <span class="f-note">© 2026 Forward Research. All rights reserved.<br>Auto-published via Zapier + Claude.</span>
+</footer>
+
+<script>
+  const bar = document.getElementById('bar');
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (s / h * 100) + '%';
+    nav.classList.toggle('on', s > 40);
+  }, { passive: true });
+
+  const obs = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+  function countUp(el) {
+    const t = parseFloat(el.dataset.count), s = el.dataset.suffix || '';
+    const isF = t % 1 !== 0, dur = 1000, t0 = performance.now();
+    const tick = now => {
+      const p = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = (isF ? (t * e).toFixed(1) : Math.round(t * e)) + s;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  const cObs = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) { countUp(e.target); cObs.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => cObs.observe(el));
+</script>
+
+</body>
+</html>

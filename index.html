@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forward/Research — Weekly Business Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,300;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #F7F6F2;
+      --white:      #FEFCF9;
+      --dark:       #0D0C0A;
+      --border:     #E0DCD5;
+      --text:       #141311;
+      --muted:      #8A867F;
+      --light:      #B4B0A8;
+      --accent:     #E8521A;
+      --accent-bg:  rgba(232, 82, 26, 0.07);
+      --font-sans:  'Bricolage Grotesque', system-ui, sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'DM Mono', monospace;
+      --col:        700px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--accent); color: #fff; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      height: 52px; display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(18px, 4vw, 44px);
+      background: rgba(247,246,242,0.93);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-brand b { color: var(--accent); font-weight: 400; }
+    .nav-brand:hover { color: var(--text); }
+
+    .nav-info {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--light);
+    }
+
+    /* ─── PAGE ─── */
+    .page {
+      max-width: calc(var(--col) + 80px);
+      margin: 0 auto;
+      padding: 0 clamp(18px, 5vw, 40px);
+    }
+
+    /* ─── HEADER ─── */
+    .pub-header {
+      padding: clamp(52px, 10vw, 96px) 0 clamp(36px, 6vw, 60px);
+      border-bottom: 2px solid var(--text);
+    }
+
+    .pub-tag {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); display: block; margin-bottom: 16px;
+    }
+
+    .pub-title {
+      font-family: var(--font-sans);
+      font-size: clamp(40px, 8vw, 88px);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.04em; text-transform: uppercase;
+      color: var(--text); margin-bottom: clamp(14px, 2vw, 22px);
+    }
+
+    .pub-title em { font-style: italic; color: var(--accent); }
+
+    .pub-desc {
+      font-family: var(--font-serif);
+      font-style: italic; font-weight: 300;
+      font-size: clamp(16px, 1.8vw, 20px);
+      color: var(--muted); line-height: 1.5;
+      max-width: 520px;
+    }
+
+    /* ─── ISSUE COUNT ─── */
+    .issue-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: clamp(14px, 2vw, 20px) 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .issue-count {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--light);
+    }
+    .issue-count b { color: var(--muted); font-weight: 500; }
+
+    .issue-sort {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--light);
+    }
+
+    /* ─── ARTICLE LIST ─── */
+    #article-list { margin-bottom: clamp(40px, 7vw, 72px); }
+
+    .card {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 20px;
+      padding: clamp(18px, 3vw, 28px) 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none; color: inherit;
+      transition: background 0.18s;
+      position: relative;
+    }
+    .card:hover { background: transparent; }
+    .card:hover .card-title { color: var(--accent); }
+
+    .card-left {
+      display: flex; flex-direction: column;
+      align-items: flex-start; padding-top: 3px;
+    }
+
+    .card-num {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.1em; color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .card-date {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 0.06em; color: var(--light);
+      line-height: 1.4; writing-mode: vertical-rl;
+      transform: rotate(180deg); margin-top: 6px;
+    }
+
+    .card-body { padding-right: 4px; }
+
+    .card-title {
+      font-family: var(--font-sans);
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 700; line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--text); margin-bottom: 7px;
+      transition: color 0.2s;
+    }
+
+    .card-subtitle {
+      font-family: var(--font-serif);
+      font-style: italic; font-weight: 300;
+      font-size: clamp(14px, 1.6vw, 17px);
+      color: var(--muted); line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .card-meta {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+
+    .card-tag {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--light); background: transparent;
+      border: 1px solid var(--border);
+      padding: 2px 8px; border-radius: 2px;
+    }
+
+    .card-dot { width: 2px; height: 2px; border-radius: 50%; background: var(--border); }
+
+    .card-read {
+      font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--light);
+    }
+
+    /* arrow */
+    .card-arrow {
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      font-size: 18px; color: var(--border);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .card:hover .card-arrow { color: var(--accent); transform: translateY(-50%) translateX(3px); }
+
+    /* ─── EMPTY STATE ─── */
+    .empty {
+      padding: 48px 0;
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--light); text-align: center;
+    }
+
+    /* ─── LOADING ─── */
+    .loading {
+      padding: 48px 0; text-align: center;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--light);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark); color: #6A6660;
+      padding: clamp(22px, 4vw, 36px) clamp(18px, 5vw, 44px);
+      display: flex; align-items: flex-start;
+      justify-content: space-between; flex-wrap: wrap; gap: 24px;
+    }
+
+    .f-col { display: flex; flex-direction: column; gap: 8px; }
+
+    .f-brand {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: #9A9690;
+    }
+    .f-brand b { color: var(--accent); font-weight: 400; }
+
+    .f-desc {
+      font-size: 12px; line-height: 1.5; max-width: 280px;
+    }
+
+    .f-note {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.1em; line-height: 1.6;
+    }
+
+    .f-auto {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .f-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* ─── REVEAL ─── */
+    .rv { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .rv.in { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .u { opacity: 0; transform: translateY(10px); animation: fadeUp 0.5s ease forwards; }
+
+    @media (max-width: 520px) {
+      .card { grid-template-columns: 1fr; }
+      .card-left { flex-direction: row; align-items: center; gap: 10px; margin-bottom: 4px; }
+      .card-date { writing-mode: horizontal-tb; transform: none; }
+      .card-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">Forward<b>/</b>Research</a>
+  <span class="nav-info">Weekly Intelligence</span>
+</nav>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="pub-header">
+    <span class="pub-tag u" style="animation-delay:.1s">Weekly Business Intelligence</span>
+    <h1 class="pub-title u" style="animation-delay:.2s">Forward<br><em>Research</em></h1>
+    <p class="pub-desc u" style="animation-delay:.32s">
+      Weekly analysis at the intersection of artificial intelligence, business transformation, and global strategy. Generated and published automatically every week.
+    </p>
+  </header>
+
+  <!-- ISSUE BAR -->
+  <div class="issue-bar rv">
+    <span class="issue-count">
+      <b id="article-count">—</b>&nbsp; Articles Published
+    </span>
+    <span class="issue-sort">Newest First</span>
+  </div>
+
+  <!-- ARTICLE LIST -->
+  <div id="article-list">
+    <div class="loading">Loading articles…</div>
+  </div>
+
+</div><!-- /page -->
+
+<footer>
+  <div class="f-col">
+    <span class="f-brand">Forward<b>/</b>Research</span>
+    <span class="f-desc">An automated research publication powered by AI. New articles are published every Monday.</span>
+  </div>
+  <div class="f-col">
+    <span class="f-auto">
+      <span class="f-dot"></span>
+      Auto-published weekly via Zapier + Claude
+    </span>
+    <span class="f-note">© 2026 Forward Research. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+  // Format date
+  function fmtDate(str) {
+    return new Date(str + 'T12:00:00').toLocaleDateString('en-GB', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    });
+  }
+
+  // Render articles
+  function render(articles) {
+    const list = document.getElementById('article-list');
+    const count = document.getElementById('article-count');
+
+    // Sort newest first
+    const sorted = [...articles].sort((a, b) => new Date(b.date) - new Date(a.date));
+    count.textContent = sorted.length;
+
+    if (sorted.length === 0) {
+      list.innerHTML = '<div class="empty">No articles published yet.</div>';
+      return;
+    }
+
+    list.innerHTML = sorted.map((a, i) => {
+      const num = String(sorted.length - i).padStart(3, '0');
+      const date = a.dateFormatted || fmtDate(a.date);
+      const tags = (a.tags || []).slice(0, 2).map(t =>
+        `<span class="card-tag">${t}</span>`
+      ).join('');
+
+      return `
+        <a class="card rv" href="./articles/${a.slug}.html">
+          <div class="card-left">
+            <span class="card-num">${num}</span>
+            <span class="card-date">${date}</span>
+          </div>
+          <div class="card-body">
+            <div class="card-title">${a.title}</div>
+            <div class="card-subtitle">${a.subtitle}</div>
+            <div class="card-meta">
+              ${tags}
+              <span class="card-dot"></span>
+              <span class="card-read">${a.readTime} read</span>
+              <span class="card-dot"></span>
+              <span class="card-read">${a.sources} sources</span>
+            </div>
+          </div>
+          <span class="card-arrow">→</span>
+        </a>`;
+    }).join('');
+
+    // Re-observe new elements
+    document.querySelectorAll('.rv:not(.in)').forEach(el => obs.observe(el));
+  }
+
+  // Load articles.json — works on GitHub Pages (https)
+  // For local testing use VS Code Live Server or similar
+  fetch('./articles.json')
+    .then(r => r.json())
+    .then(data => render(data))
+    .catch(() => {
+      // Fallback: embedded data (kept in sync by Zapier)
+      const FALLBACK = [
+        {
+          "slug": "2026-03-02-ai-inflection-point",
+          "title": "The AI Inflection Point",
+          "subtitle": "Why 2026 Is the Year Experimentation Must Give Way to Impact",
+          "date": "2026-03-02",
+          "dateFormatted": "March 2, 2026",
+          "readTime": "14 min",
+          "sources": 7,
+          "tags": ["AI", "Business Transformation", "Digital Strategy"]
+        }
+      ];
+      render(FALLBACK);
+    });
+</script>
+
+</body>
+</html>
