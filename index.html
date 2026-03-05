@@ -6,22 +6,64 @@
   <title>Forward/Research — Weekly Business Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,300;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'AvengaReckless';
+      src: url('./fonts/AvengaReckless-Headline.woff2') format('woff2'),
+           url('./fonts/AvengaReckless-Headline.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'AvengaReckless';
+      src: url('./fonts/AvengaReckless-Regular.woff2') format('woff2'),
+           url('./fonts/AvengaReckless-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'AvengaHaffer';
+      src: url('./fonts/AvengaHaffer-Regular.woff2') format('woff2'),
+           url('./fonts/AvengaHaffer-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'AvengaHaffer';
+      src: url('./fonts/AvengaHaffer-RegularItalic.woff2') format('woff2'),
+           url('./fonts/AvengaHaffer-RegularItalic.woff') format('woff');
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'AvengaHaffer';
+      src: url('./fonts/AvengaHaffer-Bold.woff2') format('woff2'),
+           url('./fonts/AvengaHaffer-Bold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #F7F6F2;
+      --bg:         #F7F4ED;
       --white:      #FEFCF9;
-      --dark:       #0D0C0A;
+      --dark:       #47433B;
       --border:     #E0DCD5;
       --text:       #141311;
       --muted:      #8A867F;
       --light:      #B4B0A8;
-      --accent:     #E8521A;
-      --accent-bg:  rgba(232, 82, 26, 0.07);
+      --accent:     #DD2C00;
+      --accent-bg:  rgba(221, 44, 0, 0.07);
+      --font-display: 'AvengaReckless', Georgia, serif;
+      --font-body:  'AvengaHaffer', system-ui, sans-serif;
       --font-sans:  'Bricolage Grotesque', system-ui, sans-serif;
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-mono:  'DM Mono', monospace;
       --col:        700px;
     }
@@ -31,37 +73,62 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-sans);
+      font-family: var(--font-body);
       font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 52px;
     }
+
+    body > .page { flex: 1; }
 
     ::selection { background: var(--accent); color: #fff; }
 
     /* ─── NAV ─── */
     nav {
-      position: sticky; top: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       height: 52px; display: flex; align-items: center;
       justify-content: space-between;
       padding: 0 clamp(18px, 4vw, 44px);
-      background: rgba(247,246,242,0.93);
+      background: rgba(247, 244, 237, 0.93);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      transition: transform 0.3s ease;
     }
+    nav.nav-hidden { transform: translateY(-100%); }
 
     .nav-brand {
       font-family: var(--font-mono); font-size: 10px;
       letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; transition: color 0.2s;
+      color: var(--accent); text-decoration: none;
     }
-    .nav-brand b { color: var(--accent); font-weight: 400; }
-    .nav-brand:hover { color: var(--text); }
+
+    .nav-r { display: flex; align-items: center; gap: 20px; }
 
     .nav-info {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: 9px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--light);
+    }
+
+    /* ─── LANG TOGGLE ─── */
+    .lang-toggle { display: flex; align-items: center; gap: 2px; }
+    .lang-btn {
       font-family: var(--font-mono); font-size: 9px;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--light);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      background: none; border: none; cursor: pointer;
+      color: var(--light); padding: 3px 5px;
+      transition: color 0.2s; line-height: 1;
+    }
+    .lang-btn:hover { color: var(--text); }
+    .lang-btn.active { color: var(--accent); }
+    .lang-sep {
+      font-family: var(--font-mono); font-size: 9px;
+      color: var(--border); pointer-events: none;
     }
 
     /* ─── PAGE ─── */
@@ -84,19 +151,18 @@
     }
 
     .pub-title {
-      font-family: var(--font-sans);
-      font-size: clamp(40px, 8vw, 88px);
-      font-weight: 800; line-height: 0.95;
-      letter-spacing: -0.04em; text-transform: uppercase;
-      color: var(--text); margin-bottom: clamp(14px, 2vw, 22px);
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(52px, 10vw, 88px);
+      line-height: 0.95; letter-spacing: -0.04em;
+      text-transform: uppercase;
+      margin-bottom: clamp(14px, 2vw, 22px);
     }
-
-    .pub-title em { font-style: italic; color: var(--accent); }
+    .pub-title .line1 { color: var(--dark); display: block; }
+    .pub-title .line2 { color: var(--accent); display: block; }
 
     .pub-desc {
-      font-family: var(--font-serif);
-      font-style: italic; font-weight: 300;
-      font-size: clamp(16px, 1.8vw, 20px);
+      font-family: var(--font-body);
+      font-weight: 400; font-size: clamp(16px, 1.8vw, 20px);
       color: var(--muted); line-height: 1.5;
       max-width: 520px;
     }
@@ -110,7 +176,7 @@
 
     .issue-count {
       font-family: var(--font-mono); font-size: 9px;
-      letter-spacing: 0.16em; text-transform: uppercase; color: var(--light);
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
     }
     .issue-count b { color: var(--muted); font-weight: 500; }
 
@@ -123,50 +189,27 @@
     #article-list { margin-bottom: clamp(40px, 7vw, 72px); }
 
     .card {
-      display: grid;
-      grid-template-columns: 44px 1fr;
+      display: flex; align-items: flex-start; justify-content: space-between;
       gap: 20px;
-      padding: clamp(18px, 3vw, 28px) 0;
+      padding: clamp(20px, 3vw, 28px) 0;
       border-bottom: 1px solid var(--border);
       text-decoration: none; color: inherit;
-      transition: background 0.18s;
       position: relative;
     }
-    .card:hover { background: transparent; }
     .card:hover .card-title { color: var(--accent); }
 
-    .card-left {
-      display: flex; flex-direction: column;
-      align-items: flex-start; padding-top: 3px;
-    }
-
-    .card-num {
-      font-family: var(--font-mono); font-size: 9px;
-      letter-spacing: 0.1em; color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .card-date {
-      font-family: var(--font-mono); font-size: 8px;
-      letter-spacing: 0.06em; color: var(--light);
-      line-height: 1.4; writing-mode: vertical-rl;
-      transform: rotate(180deg); margin-top: 6px;
-    }
-
-    .card-body { padding-right: 4px; }
+    .card-body { flex: 1; }
 
     .card-title {
-      font-family: var(--font-sans);
+      font-family: var(--font-display); font-weight: 700;
       font-size: clamp(20px, 3vw, 30px);
-      font-weight: 700; line-height: 1.08;
-      letter-spacing: -0.025em;
+      line-height: 1.08; letter-spacing: -0.025em;
       color: var(--text); margin-bottom: 7px;
       transition: color 0.2s;
     }
 
     .card-subtitle {
-      font-family: var(--font-serif);
-      font-style: italic; font-weight: 300;
+      font-family: var(--font-body); font-weight: 400;
       font-size: clamp(14px, 1.6vw, 17px);
       color: var(--muted); line-height: 1.45;
       margin-bottom: 12px;
@@ -191,24 +234,16 @@
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--light);
     }
 
-    /* arrow */
     .card-arrow {
-      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-      font-size: 18px; color: var(--border);
+      font-family: var(--font-sans); font-size: 18px;
+      color: var(--muted); flex-shrink: 0;
+      align-self: center;
       transition: color 0.2s, transform 0.2s;
     }
-    .card:hover .card-arrow { color: var(--accent); transform: translateY(-50%) translateX(3px); }
+    .card:hover .card-arrow { color: var(--accent); transform: translateX(3px); }
 
-    /* ─── EMPTY STATE ─── */
-    .empty {
-      padding: 48px 0;
-      font-family: var(--font-mono); font-size: 11px;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--light); text-align: center;
-    }
-
-    /* ─── LOADING ─── */
-    .loading {
+    /* ─── EMPTY / LOADING ─── */
+    .empty, .loading {
       padding: 48px 0; text-align: center;
       font-family: var(--font-mono); font-size: 10px;
       letter-spacing: 0.14em; text-transform: uppercase;
@@ -230,9 +265,10 @@
       letter-spacing: 0.16em; text-transform: uppercase;
       color: #9A9690;
     }
-    .f-brand b { color: var(--accent); font-weight: 400; }
+    .f-brand b { color: #E8521A; font-weight: 400; }
 
     .f-desc {
+      font-family: var(--font-sans);
       font-size: 12px; line-height: 1.5; max-width: 280px;
     }
 
@@ -245,11 +281,11 @@
       display: inline-flex; align-items: center; gap: 6px;
       font-family: var(--font-mono); font-size: 9px;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--accent);
+      color: #E8521A;
     }
     .f-dot {
       width: 5px; height: 5px; border-radius: 50%;
-      background: var(--accent);
+      background: #E8521A;
       animation: pulse 2s ease infinite;
     }
     @keyframes pulse {
@@ -265,9 +301,6 @@
     .u { opacity: 0; transform: translateY(10px); animation: fadeUp 0.5s ease forwards; }
 
     @media (max-width: 520px) {
-      .card { grid-template-columns: 1fr; }
-      .card-left { flex-direction: row; align-items: center; gap: 10px; margin-bottom: 4px; }
-      .card-date { writing-mode: horizontal-tb; transform: none; }
       .card-arrow { display: none; }
     }
   </style>
@@ -275,18 +308,28 @@
 <body>
 
 <!-- NAV -->
-<nav>
-  <a href="index.html" class="nav-brand">Forward<b>/</b>Research</a>
-  <span class="nav-info">Weekly Intelligence</span>
+<nav id="nav">
+  <a href="./index.html" class="nav-brand">Avenga Labs</a>
+  <div class="nav-r">
+    <span class="nav-info" data-i18n="nav.label">Weekly Intelligence</span>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" data-lang="de">DE</button>
+    </div>
+  </div>
 </nav>
 
 <div class="page">
 
   <!-- HEADER -->
   <header class="pub-header">
-    <span class="pub-tag u" style="animation-delay:.1s">Weekly Business Intelligence</span>
-    <h1 class="pub-title u" style="animation-delay:.2s">Forward<br><em>Research</em></h1>
-    <p class="pub-desc u" style="animation-delay:.32s">
+    <span class="pub-tag u" style="animation-delay:.1s" data-i18n="pub.tag">Avenga-Intelligence</span>
+    <h1 class="pub-title u" style="animation-delay:.2s">
+      <span class="line1">Forward</span>
+      <span class="line2">Research</span>
+    </h1>
+    <p class="pub-desc u" style="animation-delay:.32s" data-i18n="pub.desc">
       Weekly analysis at the intersection of artificial intelligence, business transformation, and global strategy. Generated and published automatically every week.
     </p>
   </header>
@@ -294,9 +337,9 @@
   <!-- ISSUE BAR -->
   <div class="issue-bar rv">
     <span class="issue-count">
-      <b id="article-count">—</b>&nbsp; Articles Published
+      <b id="article-count">—</b>&nbsp; <span data-i18n="issue.label">Articles Published</span>
     </span>
-    <span class="issue-sort">Newest First</span>
+    <span class="issue-sort" data-i18n="issue.sort">Newest First</span>
   </div>
 
   <!-- ARTICLE LIST -->
@@ -304,103 +347,151 @@
     <div class="loading">Loading articles…</div>
   </div>
 
-</div><!-- /page -->
+</div>
 
 <footer>
   <div class="f-col">
     <span class="f-brand">Forward<b>/</b>Research</span>
-    <span class="f-desc">An automated research publication powered by AI. New articles are published every Monday.</span>
+    <span class="f-desc" data-i18n="f.desc">An automated research publication powered by AI. New articles are published every Monday.</span>
   </div>
   <div class="f-col">
     <span class="f-auto">
       <span class="f-dot"></span>
-      Auto-published weekly via Zapier + Claude
+      <span data-i18n="f.auto">Auto-published weekly via Avenga Labs</span>
     </span>
-    <span class="f-note">© 2026 Forward Research. All rights reserved.</span>
+    <span class="f-note" data-i18n="f.copy">© 2026 Forward Research. All rights reserved.</span>
   </div>
 </footer>
 
 <script>
-  // Scroll reveal
+  /* ── TRANSLATIONS ── */
+  const i18n = {
+    en: {
+      'nav.label':   'Weekly Intelligence',
+      'pub.tag':     'Avenga-Intelligence',
+      'pub.desc':    'Weekly analysis at the intersection of artificial intelligence, business transformation, and global strategy. Generated and published automatically every week.',
+      'issue.label': 'Articles Published',
+      'issue.sort':  'Newest First',
+      'read':        'read',
+      'sources':     'sources',
+      'f.desc':      'An automated research publication powered by AI. New articles are published every Monday.',
+      'f.auto':      'Auto-published weekly via Avenga Labs',
+      'f.copy':      '© 2026 Forward Research. All rights reserved.',
+    },
+    de: {
+      'nav.label':   'Wöchentliche Analyse',
+      'pub.tag':     'Avenga-Intelligenz',
+      'pub.desc':    'Wöchentliche Analyse an der Schnittstelle von KI, Business-Transformation und globaler Strategie. Automatisch generiert und wöchentlich veröffentlicht.',
+      'issue.label': 'Artikel veröffentlicht',
+      'issue.sort':  'Neueste zuerst',
+      'read':        'Lesezeit',
+      'sources':     'Quellen',
+      'f.desc':      'Eine automatisierte Research-Publikation, betrieben von KI. Neue Artikel erscheinen jeden Montag.',
+      'f.auto':      'Automatisch wöchentlich via Avenga Labs',
+      'f.copy':      '© 2026 Forward Research. Alle Rechte vorbehalten.',
+    }
+  };
+
+  let currentLang = localStorage.getItem('lang') || 'en';
+
+  function applyLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    document.documentElement.lang = lang;
+    const t = i18n[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    // re-render cards with correct read/sources labels
+    if (window._articles) renderCards(window._articles);
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+
+  /* ── NAV SCROLL HIDE/SHOW ── */
+  const nav = document.getElementById('nav');
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    nav.classList.toggle('nav-hidden', y > lastY && y > 80);
+    lastY = y;
+  }, { passive: true });
+
+  /* ── SCROLL REVEAL ── */
   const obs = new IntersectionObserver(es => {
     es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
   }, { threshold: 0.08 });
   document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-  // Format date
-  function fmtDate(str) {
-    return new Date(str + 'T12:00:00').toLocaleDateString('en-GB', {
+  function fmtDate(str, lang) {
+    return new Date(str + 'T12:00:00').toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-GB', {
       day: 'numeric', month: 'long', year: 'numeric'
     });
   }
 
-  // Render articles
-  function render(articles) {
+  function renderCards(articles) {
     const list = document.getElementById('article-list');
-    const count = document.getElementById('article-count');
-
-    // Sort newest first
+    const t = i18n[currentLang];
     const sorted = [...articles].sort((a, b) => new Date(b.date) - new Date(a.date));
-    count.textContent = sorted.length;
+    document.getElementById('article-count').textContent = sorted.length;
 
     if (sorted.length === 0) {
-      list.innerHTML = '<div class="empty">No articles published yet.</div>';
+      list.innerHTML = `<div class="empty">${currentLang === 'de' ? 'Noch keine Artikel veröffentlicht.' : 'No articles published yet.'}</div>`;
       return;
     }
 
-    list.innerHTML = sorted.map((a, i) => {
-      const num = String(sorted.length - i).padStart(3, '0');
-      const date = a.dateFormatted || fmtDate(a.date);
-      const tags = (a.tags || []).slice(0, 2).map(t =>
-        `<span class="card-tag">${t}</span>`
-      ).join('');
-
+    list.innerHTML = sorted.map(a => {
+      const date = a.dateFormatted || fmtDate(a.date, currentLang);
+      const tags = (a.tags || []).slice(0, 2).map(tag => `<span class="card-tag">${tag}</span>`).join('');
       return `
         <a class="card rv" href="./articles/${a.slug}.html">
-          <div class="card-left">
-            <span class="card-num">${num}</span>
-            <span class="card-date">${date}</span>
-          </div>
           <div class="card-body">
             <div class="card-title">${a.title}</div>
             <div class="card-subtitle">${a.subtitle}</div>
             <div class="card-meta">
               ${tags}
               <span class="card-dot"></span>
-              <span class="card-read">${a.readTime} read</span>
+              <span class="card-read">${a.readTime} ${t['read']}</span>
               <span class="card-dot"></span>
-              <span class="card-read">${a.sources} sources</span>
+              <span class="card-read">${a.sources} ${t['sources']}</span>
+              <span class="card-dot"></span>
+              <span class="card-read">${date}</span>
             </div>
           </div>
           <span class="card-arrow">→</span>
         </a>`;
     }).join('');
 
-    // Re-observe new elements
     document.querySelectorAll('.rv:not(.in)').forEach(el => obs.observe(el));
   }
 
-  // Load articles.json — works on GitHub Pages (https)
-  // For local testing use VS Code Live Server or similar
+  function render(articles) {
+    window._articles = articles;
+    renderCards(articles);
+  }
+
   fetch('./articles.json')
     .then(r => r.json())
     .then(data => render(data))
-    .catch(() => {
-      // Fallback: embedded data (kept in sync by Zapier)
-      const FALLBACK = [
-        {
-          "slug": "2026-03-02-ai-inflection-point",
-          "title": "The AI Inflection Point",
-          "subtitle": "Why 2026 Is the Year Experimentation Must Give Way to Impact",
-          "date": "2026-03-02",
-          "dateFormatted": "March 2, 2026",
-          "readTime": "14 min",
-          "sources": 7,
-          "tags": ["AI", "Business Transformation", "Digital Strategy"]
-        }
-      ];
-      render(FALLBACK);
-    });
+    .catch(() => render([{
+      slug: '2026-03-02-ai-inflection-point',
+      title: 'The AI Inflection Point',
+      subtitle: 'Why 2026 Is the Year Experimentation Must Give Way to Impact',
+      date: '2026-03-02',
+      dateFormatted: '4 March 2026',
+      readTime: '14 min',
+      sources: 7,
+      tags: ['AI', 'Business Transformation']
+    }]));
+
+  // apply saved language on load
+  applyLang(currentLang);
 </script>
 
 </body>

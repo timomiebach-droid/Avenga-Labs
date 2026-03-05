@@ -5,38 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- CLAUDE: Replace with article title -->
   <title>ARTICLE_TITLE — Forward/Research</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300;1,400;1,600&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* ── DO NOT MODIFY THIS STYLE BLOCK ── */
+    @font-face {
+      font-family: 'AvengaReckless';
+      src: url('../fonts/AvengaReckless-Headline.woff2') format('woff2'),
+           url('../fonts/AvengaReckless-Headline.woff') format('woff');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'AvengaReckless';
+      src: url('../fonts/AvengaReckless-Regular.woff2') format('woff2'),
+           url('../fonts/AvengaReckless-Regular.woff') format('woff');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'AvengaHaffer';
+      src: url('../fonts/AvengaHaffer-Regular.woff2') format('woff2'),
+           url('../fonts/AvengaHaffer-Regular.woff') format('woff');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'AvengaHaffer';
+      src: url('../fonts/AvengaHaffer-RegularItalic.woff2') format('woff2'),
+           url('../fonts/AvengaHaffer-RegularItalic.woff') format('woff');
+      font-weight: 400; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'AvengaHaffer';
+      src: url('../fonts/AvengaHaffer-Bold.woff2') format('woff2'),
+           url('../fonts/AvengaHaffer-Bold.woff') format('woff');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #F7F6F2;
-      --white:      #FEFCF9;
-      --dark:       #0D0C0A;
-      --surface:    #EFECEA;
-      --border:     #E0DCD5;
-      --text:       #141311;
-      --muted:      #8A867F;
-      --light:      #B4B0A8;
-      --accent:     #E8521A;
-      --accent-bg:  rgba(232, 82, 26, 0.08);
-      --blue:       #1B5FCC;
-      --green:      #1A8F5C;
-      --font-sans:  'Bricolage Grotesque', system-ui, sans-serif;
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
-      --font-mono:  'DM Mono', monospace;
-      --col:        660px;
+      --bg:          #F7F4ED;
+      --white:       #FEFCF9;
+      --dark:        #47433B;
+      --border:      #E0DCD5;
+      --text:        #141311;
+      --muted:       #8A867F;
+      --light:       #B4B0A8;
+      --accent:      #DD2C00;
+      --accent-bg:   rgba(221, 44, 0, 0.08);
+      --blue:        #1B5FCC;
+      --green:       #1A8F5C;
+      --font-display: 'AvengaReckless', Georgia, serif;
+      --font-body:   'AvengaHaffer', system-ui, sans-serif;
+      --font-sans:   'AvengaHaffer', system-ui, sans-serif;
+      --font-mono:   'AvengaHaffer', system-ui, sans-serif;
+      --col:         660px;
     }
 
     html { scroll-behavior: smooth; }
     body {
       background: var(--bg); color: var(--text);
-      font-family: var(--font-sans); font-size: 16px;
+      font-family: var(--font-body); font-size: 16px;
       line-height: 1.78; font-weight: 400;
       -webkit-font-smoothing: antialiased;
+      padding-top: 52px;
     }
     ::selection { background: var(--accent); color: #fff; }
 
@@ -51,35 +79,34 @@
       height: 52px; display: flex; align-items: center;
       justify-content: space-between;
       padding: 0 clamp(18px, 4vw, 44px);
-      border-bottom: 1px solid transparent;
-      transition: background 0.3s, border-color 0.3s;
-    }
-    nav.on {
-      background: rgba(247, 246, 242, 0.93);
+      background: rgba(247, 244, 237, 0.93);
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-bottom-color: var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: transform 0.3s ease;
     }
+    nav.nav-hidden { transform: translateY(-100%); }
     .nav-brand {
       font-family: var(--font-mono); font-size: 10px;
       letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; transition: color 0.2s;
+      color: var(--accent); text-decoration: none;
     }
-    .nav-brand b { color: var(--accent); font-weight: 400; }
-    .nav-brand:hover { color: var(--text); }
-    .nav-r { display: flex; align-items: center; gap: 20px; list-style: none; }
-    .nav-r a {
-      font-family: var(--font-mono); font-size: 10px;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    .nav-r { display: flex; align-items: center; gap: 20px; }
+    .nav-info {
+      font-family: var(--font-display); font-weight: 400;
+      font-size: 9px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--light);
     }
-    .nav-r a:hover { color: var(--text); }
-    .nav-r .cta a {
-      color: var(--accent); border: 1px solid rgba(232,82,26,0.3);
-      padding: 4px 12px; border-radius: 2px;
-      transition: background 0.2s, color 0.2s;
+    .lang-toggle { display: flex; align-items: center; gap: 2px; }
+    .lang-btn {
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      background: none; border: none; cursor: pointer;
+      color: var(--light); padding: 3px 5px;
+      transition: color 0.2s; line-height: 1;
     }
-    .nav-r .cta a:hover { background: var(--accent); color: #fff; }
-    @media (max-width: 600px) { .nav-r .sm-hide { display: none; } }
+    .lang-btn:hover { color: var(--text); }
+    .lang-btn.active { color: var(--accent); }
+    .lang-sep { font-family: var(--font-mono); font-size: 9px; color: var(--border); pointer-events: none; }
 
     .page {
       max-width: calc(var(--col) + 80px);
@@ -95,7 +122,7 @@
       font-family: var(--font-mono); font-size: 9px;
       letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--accent); background: var(--accent-bg);
-      border: 1px solid rgba(232,82,26,0.22);
+      border: 1px solid rgba(221,44,0,0.22);
       padding: 3px 9px; border-radius: 2px;
     }
     .eyebrow-date {
@@ -103,15 +130,15 @@
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--light);
     }
     h1 {
-      font-family: var(--font-sans);
+      font-family: var(--font-display);
       font-size: clamp(46px, 9vw, 100px);
-      font-weight: 800; line-height: 0.95;
+      font-weight: 700; line-height: 0.95;
       letter-spacing: -0.04em; text-transform: uppercase;
       color: var(--text); margin-bottom: clamp(14px, 2vw, 22px);
     }
     h1 em { font-style: italic; color: var(--accent); }
     .sub {
-      font-family: var(--font-serif); font-style: italic; font-weight: 300;
+      font-family: var(--font-body); font-style: italic; font-weight: 400;
       font-size: clamp(17px, 2vw, 22px); color: var(--muted); line-height: 1.5;
       max-width: 480px; margin: 0 auto clamp(20px, 3vw, 30px);
     }
@@ -135,8 +162,8 @@
       flex-direction: column;
     }
     .hv-year {
-      font-family: var(--font-sans); font-size: clamp(90px, 20vw, 260px);
-      font-weight: 800; letter-spacing: -0.06em; line-height: 0.9;
+      font-family: var(--font-display); font-size: clamp(90px, 20vw, 260px);
+      font-weight: 700; letter-spacing: -0.06em; line-height: 0.9;
       color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.10);
       user-select: none;
     }
@@ -150,7 +177,7 @@
       height: 70px; padding: 0 10px; z-index: 3;
     }
     .hv-bar { flex: 1; background: rgba(255,255,255,0.05); border-radius: 2px 2px 0 0; }
-    .hv-bar:nth-child(3n+1) { background: rgba(232,82,26,0.35); }
+    .hv-bar:nth-child(3n+1) { background: rgba(221,44,0,0.35); }
     .hero-visual::after {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0;
       height: 3px; background: var(--accent); z-index: 4;
@@ -172,23 +199,23 @@
 
     .lead { font-size: clamp(17px, 2vw, 20px); line-height: 1.72; font-weight: 400; margin-bottom: 1.8em; }
     .lead::first-letter {
-      font-family: var(--font-sans); font-size: 4.8em; font-weight: 800;
+      font-family: var(--font-display); font-size: 4.8em; font-weight: 700;
       line-height: 0.78; float: left; margin: 0.05em 0.12em 0 0; color: var(--accent);
     }
 
     .sec { margin-top: clamp(44px, 8vw, 76px); margin-bottom: 1.1em; padding-top: clamp(28px, 5vw, 48px); border-top: 1px solid var(--border); }
     .sec-lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--light); display: block; margin-bottom: 8px; }
-    .sec h2 { font-family: var(--font-sans); font-size: clamp(24px, 4vw, 38px); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; color: var(--text); }
+    .sec h2 { font-family: var(--font-display); font-size: clamp(24px, 4vw, 38px); font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; color: var(--text); }
 
     .pull { margin: clamp(32px, 6vw, 52px) clamp(-18px, -3vw, -48px); padding: clamp(20px, 3vw, 32px) clamp(20px, 3.5vw, 40px); border-top: 2px solid var(--text); border-bottom: 2px solid var(--text); }
     @media (max-width: 780px) { .pull { margin-left: 0; margin-right: 0; } }
-    .pull p { font-family: var(--font-serif); font-size: clamp(20px, 2.8vw, 30px); font-style: italic; font-weight: 400; line-height: 1.42; color: var(--text); margin: 0 !important; }
+    .pull p { font-family: var(--font-body); font-size: clamp(20px, 2.8vw, 30px); font-style: italic; font-weight: 400; line-height: 1.42; color: var(--text); margin: 0 !important; }
     .pull cite { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 13px; font-style: normal; }
 
     .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; margin: clamp(22px, 4vw, 40px) 0; }
     @media (max-width: 500px) { .stat-grid { grid-template-columns: 1fr; } }
     .sg { background: var(--white); padding: clamp(16px, 2.5vw, 24px); }
-    .sg-v { font-family: var(--font-sans); font-size: clamp(34px, 5vw, 52px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-bottom: 4px; }
+    .sg-v { font-family: var(--font-display); font-size: clamp(34px, 5vw, 52px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 4px; }
     .sg:nth-child(1) .sg-v { color: var(--accent); }
     .sg:nth-child(2) .sg-v { color: var(--blue); }
     .sg:nth-child(3) .sg-v { color: var(--green); }
@@ -196,7 +223,7 @@
 
     .sc { margin: clamp(24px, 4vw, 44px) 0; padding: clamp(20px, 3.5vw, 30px); border: 1px solid var(--border); border-radius: 3px; background: var(--white); display: flex; gap: clamp(16px, 3vw, 26px); align-items: flex-start; }
     @media (max-width: 480px) { .sc { flex-direction: column; gap: 10px; } }
-    .sc-n { font-family: var(--font-sans); font-size: clamp(52px, 9vw, 84px); font-weight: 800; letter-spacing: -0.05em; color: var(--accent); line-height: 0.88; flex-shrink: 0; }
+    .sc-n { font-family: var(--font-display); font-size: clamp(52px, 9vw, 84px); font-weight: 700; letter-spacing: -0.05em; color: var(--accent); line-height: 0.88; flex-shrink: 0; }
     .sc-body { padding-top: 2px; }
     .sc-lbl { font-size: 14px; color: var(--text); line-height: 1.55; margin-bottom: 8px; }
     .sc-src { font-family: var(--font-mono); font-size: 9px; color: var(--light); letter-spacing: 0.06em; }
@@ -205,7 +232,7 @@
     .analyst { padding: clamp(14px, 2vw, 20px) 0; border-bottom: 1px solid var(--border); }
     .analyst:first-child { border-top: 1px solid var(--border); }
     .a-firm { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
-    .a-quote { font-family: var(--font-serif); font-size: clamp(14px, 1.8vw, 17px); font-style: italic; color: var(--text); line-height: 1.55; }
+    .a-quote { font-family: var(--font-body); font-size: clamp(14px, 1.8vw, 17px); font-style: italic; color: var(--text); line-height: 1.55; }
 
     .uc-list { margin: clamp(18px, 3vw, 32px) 0; }
     .uc { padding: clamp(12px, 2vw, 18px) 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 26px 1fr; gap: 14px; }
@@ -227,15 +254,57 @@
     .sources ol li a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--border); transition: color 0.2s, text-decoration-color 0.2s; }
     .sources ol li a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
-    footer { background: var(--dark); color: #7A7670; padding: clamp(22px, 4vw, 36px) clamp(18px, 5vw, 44px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: clamp(36px, 6vw, 60px); }
-    .f-brand { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; }
-    .f-brand b { color: var(--accent); font-weight: 400; }
-    .f-note { font-size: 11px; line-height: 1.5; text-align: right; }
+    footer { background: var(--dark); color: #6A6660; padding: clamp(22px, 4vw, 36px) clamp(18px, 5vw, 44px); display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .f-col { display: flex; flex-direction: column; gap: 8px; }
+    .f-brand { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #9A9690; }
+    .f-brand b { color: #E8521A; font-weight: 400; }
+    .f-desc { font-family: var(--font-sans); font-size: 12px; line-height: 1.5; max-width: 280px; }
+    .f-note { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; line-height: 1.6; }
+    .f-auto { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #E8521A; }
+    .f-dot { width: 5px; height: 5px; border-radius: 50%; background: #E8521A; animation: pulse 2s ease infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
 
     .rv { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
     .rv.in { opacity: 1; transform: translateY(0); }
     @keyframes up { to { opacity: 1; transform: translateY(0); } }
     .u { opacity: 0; transform: translateY(10px); animation: up 0.55s ease forwards; }
+
+    /* ─── HERO HEADER WRAP ─── */
+    .hero-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: var(--dark);
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: blur(3px) brightness(0.35);
+      transform: scale(1.05);
+      pointer-events: none; user-select: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: calc(var(--col) + 80px);
+      margin: 0 auto;
+      padding: 0 clamp(18px, 5vw, 40px);
+    }
+    .hero-wrap .title-block { position: relative; z-index: 1; }
+    .hero-wrap h1 { color: #fff; }
+    .hero-wrap h1 em { color: var(--accent); }
+    .hero-wrap .sub { color: rgba(255,255,255,0.72); }
+    .hero-wrap .tag { background: rgba(221,44,0,0.22); border-color: rgba(221,44,0,0.45); color: var(--accent); }
+    .hero-wrap .eyebrow-date { color: rgba(255,255,255,0.48); }
+    .hero-wrap .by { color: rgba(255,255,255,0.5); }
+    .hero-wrap .by strong { color: rgba(255,255,255,0.78); }
+    .hero-wrap .by-dot { background: rgba(255,255,255,0.22); }
+
+    /* ─── STAT CARDS: alle Zahlen rot, Text zentriert ─── */
+    .sg { text-align: center; }
+    .sg-v { color: var(--accent); }
+    .sg:nth-child(2) .sg-v { color: var(--accent); }
+    .sg:nth-child(3) .sg-v { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -243,76 +312,55 @@
 <div id="bar"></div>
 
 <nav id="nav">
-  <a href="../index.html" class="nav-brand">Forward<b>/</b>Research</a>
-  <ul class="nav-r">
-    <li class="sm-hide"><a href="#use-cases">Use Cases</a></li>
-    <li class="sm-hide"><a href="#sources">Sources</a></li>
-    <li class="cta"><a href="#">Download</a></li>
-  </ul>
+  <a href="../index.html" class="nav-brand">Avenga Labs</a>
+  <div class="nav-r">
+    <span class="nav-info" data-i18n="nav.label">Weekly Intelligence</span>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" data-lang="de">DE</button>
+    </div>
+  </div>
 </nav>
 
+<!-- ═══════════════════════════════════════════════
+     CLAUDE: Replace everything between these markers
+     ═══════════════════════════════════════════════ -->
+
+<!-- CLAUDE: Replace src with article background image path -->
+<div class="hero-wrap">
+  <img class="hero-bg" src="" alt="">
+  <div class="hero-inner">
+    <div class="title-block">
+      <div class="eyebrow u" style="animation-delay:.2s">
+        <!-- CLAUDE: Update tag label and date -->
+        <span class="tag">Business Research</span>
+        <span class="eyebrow-date">MONTH DD, YYYY</span>
+      </div>
+
+      <!-- CLAUDE: Replace with article title. Use <em> on one word for italic accent. Max 4 words. -->
+      <h1 class="u" style="animation-delay:.32s">
+        Article<br><em>Title</em><br>Here
+      </h1>
+
+      <!-- CLAUDE: Replace with article subtitle (one sentence, editorial tone) -->
+      <p class="sub u" style="animation-delay:.44s">
+        Article subtitle goes here — one compelling sentence about the main argument.
+      </p>
+
+      <!-- CLAUDE: Update read time and sources count -->
+      <div class="byline u" style="animation-delay:.56s">
+        <span class="by"><strong>Forward Research</strong> — Business Intelligence Unit</span>
+        <span class="by-dot"></span>
+        <span class="by"><strong>12 min</strong> read</span>
+        <span class="by-dot"></span>
+        <span class="by"><strong>6</strong> sources</span>
+      </div>
+    </div>
+  </div>
+</div><!-- /hero-wrap -->
+
 <div class="page">
-
-  <!-- ═══════════════════════════════════════════════
-       CLAUDE: Replace everything between these markers
-       ═══════════════════════════════════════════════ -->
-
-  <div class="title-block">
-    <div class="eyebrow u" style="animation-delay:.2s">
-      <!-- CLAUDE: Update tag label and date -->
-      <span class="tag">Business Research</span>
-      <span class="eyebrow-date">MONTH DD, YYYY</span>
-    </div>
-
-    <!-- CLAUDE: Replace with article title. Use <em> on one word for italic accent. Max 4 words. -->
-    <h1 class="u" style="animation-delay:.32s">
-      Article<br><em>Title</em><br>Here
-    </h1>
-
-    <!-- CLAUDE: Replace with article subtitle (one sentence, editorial tone) -->
-    <p class="sub u" style="animation-delay:.44s">
-      Article subtitle goes here — one compelling sentence about the main argument.
-    </p>
-
-    <!-- CLAUDE: Update read time and sources count -->
-    <div class="byline u" style="animation-delay:.56s">
-      <span class="by"><strong>Forward Research</strong> — Business Intelligence Unit</span>
-      <span class="by-dot"></span>
-      <span class="by"><strong>12 min</strong> read</span>
-      <span class="by-dot"></span>
-      <span class="by"><strong>6</strong> sources</span>
-    </div>
-  </div>
-
-  <!-- CLAUDE: Update the hv-year span with the current year -->
-  <div class="hero-visual u" style="animation-delay:.66s">
-    <div class="hv-inner">
-      <span class="hv-year">2026</span>
-      <span class="hv-tag">Business &amp; Strategy Research Report</span>
-    </div>
-    <div class="hv-bars">
-      <div class="hv-bar" style="height:38px"></div>
-      <div class="hv-bar" style="height:24px"></div>
-      <div class="hv-bar" style="height:52px"></div>
-      <div class="hv-bar" style="height:18px"></div>
-      <div class="hv-bar" style="height:44px"></div>
-      <div class="hv-bar" style="height:30px"></div>
-      <div class="hv-bar" style="height:60px"></div>
-      <div class="hv-bar" style="height:22px"></div>
-      <div class="hv-bar" style="height:48px"></div>
-      <div class="hv-bar" style="height:36px"></div>
-      <div class="hv-bar" style="height:28px"></div>
-      <div class="hv-bar" style="height:56px"></div>
-      <div class="hv-bar" style="height:20px"></div>
-      <div class="hv-bar" style="height:42px"></div>
-      <div class="hv-bar" style="height:34px"></div>
-      <div class="hv-bar" style="height:62px"></div>
-      <div class="hv-bar" style="height:26px"></div>
-      <div class="hv-bar" style="height:46px"></div>
-      <div class="hv-bar" style="height:32px"></div>
-      <div class="hv-bar" style="height:50px"></div>
-    </div>
-  </div>
 
   <hr class="rule">
 
@@ -463,7 +511,7 @@
 
     <!-- CLAUDE: List all sources cited in the article. Use id="fn1", id="fn2" etc. -->
     <div class="sources rv" id="sources">
-      <span class="sources-lbl">Sources &amp; References</span>
+      <span class="sources-lbl" data-i18n="sources.lbl">Sources &amp; References</span>
       <ol>
         <li id="fn1">Author/Organisation. <em>Publication Title.</em> Publisher, Year. <a href="#" target="_blank" rel="noopener">domain.com</a></li>
         <li id="fn2">Author/Organisation. <em>Publication Title.</em> Publisher, Year. <a href="#" target="_blank" rel="noopener">domain.com</a></li>
@@ -476,18 +524,50 @@
 </div>
 
 <footer>
-  <span class="f-brand">Forward<b>/</b>Research</span>
-  <span class="f-note">© 2026 Forward Research. All rights reserved.<br>Auto-published via Zapier + Claude.</span>
+  <div class="f-col">
+    <span class="f-brand">Forward<b>/</b>Research</span>
+    <span class="f-desc" data-i18n="f.desc">An automated research publication powered by AI. New articles are published every Monday.</span>
+  </div>
+  <div class="f-col">
+    <span class="f-auto"><span class="f-dot"></span><span data-i18n="f.auto">Auto-published weekly via Avenga Labs</span></span>
+    <span class="f-note" data-i18n="f.copy">© 2026 Forward Research. All rights reserved.</span>
+  </div>
 </footer>
 
 <script>
+  /* ── TRANSLATIONS ── */
+  const i18n = {
+    en: { 'nav.label': 'Weekly Intelligence', 'sources.lbl': 'Sources & References' },
+    de: { 'nav.label': 'Wöchentliche Analyse', 'sources.lbl': 'Quellen & Referenzen' }
+  };
+  let currentLang = localStorage.getItem('lang') || 'en';
+  function applyLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    document.documentElement.lang = lang;
+    const t = i18n[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n];
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+  applyLang(currentLang);
+
+  /* ── NAV SCROLL HIDE/SHOW + PROGRESS BAR ── */
   const bar = document.getElementById('bar');
   const nav = document.getElementById('nav');
+  let lastY = 0;
   window.addEventListener('scroll', () => {
     const s = window.scrollY;
     const h = document.documentElement.scrollHeight - window.innerHeight;
     bar.style.width = (s / h * 100) + '%';
-    nav.classList.toggle('on', s > 40);
+    nav.classList.toggle('nav-hidden', s > lastY && s > 80);
+    lastY = s;
   }, { passive: true });
 
   const obs = new IntersectionObserver(es => {
