@@ -57,7 +57,7 @@
       --col:         660px;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       background: var(--bg);
@@ -68,7 +68,11 @@
       font-weight: 400;
       -webkit-font-smoothing: antialiased;
       padding-top: 52px;
+      overflow-x: hidden;
+      min-height: 100dvh;
+      display: flex; flex-direction: column;
     }
+    main { flex: 1; }
 
     ::selection { background: var(--accent); color: #fff; }
 
@@ -498,8 +502,9 @@
 </nav>
 
 <!-- HERO HEADER (full-width) -->
+<main>
 <div class="hero-wrap">
-  <img class="hero-bg" src="https://www.figma.com/api/mcp/asset/625cd3d4-3348-438d-9285-16d160c5c8df" alt="">
+  <img class="hero-bg" src="https://www.figma.com/api/mcp/asset/625cd3d4-3348-438d-9285-16d160c5c8df" alt="" loading="eager" fetchpriority="high" decoding="async">
   <div class="hero-inner">
     <div class="title-block">
       <div class="eyebrow u" style="animation-delay:.2s">
@@ -755,6 +760,8 @@
   </article>
 
 </div><!-- /page -->
+
+</main>
 
 <footer>
   <div class="f-col">

@@ -58,14 +58,18 @@
       --col:         660px;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       background: var(--bg); color: var(--text);
       font-family: var(--font-body); font-size: 16px;
       line-height: 1.78; font-weight: 400;
       -webkit-font-smoothing: antialiased;
       padding-top: 52px;
+      overflow-x: hidden;
+      min-height: 100dvh;
+      display: flex; flex-direction: column;
     }
+    main { flex: 1; }
     ::selection { background: var(--accent); color: #fff; }
 
     #bar {
@@ -327,9 +331,10 @@
      CLAUDE: Replace everything between these markers
      ═══════════════════════════════════════════════ -->
 
+<main>
 <!-- CLAUDE: Replace src with article background image path -->
 <div class="hero-wrap">
-  <img class="hero-bg" src="" alt="">
+  <img class="hero-bg" src="" alt="" loading="eager" fetchpriority="high" decoding="async">
   <div class="hero-inner">
     <div class="title-block">
       <div class="eyebrow u" style="animation-delay:.2s">
@@ -522,6 +527,8 @@
   </article>
 
 </div>
+
+</main>
 
 <footer>
   <div class="f-col">
